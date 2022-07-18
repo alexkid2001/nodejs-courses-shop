@@ -1,0 +1,55 @@
+include  ../partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include ../partials/navbar
+
+
+    .container
+      .auth
+        .row
+          .col.s12
+            ul.tabs
+              li.tab.col.s6
+               a(class="active"  href="#login") Check In
+              li.tab.col.s6
+                a(href="#registration") Check Up
+
+
+          #login.col.s6.offset-s3
+            h1 Check In
+            form(action="/auth/login" method="POST")
+              .input-field
+                input(placeholder="Email" name="email" id="email" type="text" class="validate" required)
+                label(for="email") Email
+                span(class="helper-text" data-error="Enter Email")
+              .input-field
+                input(placeholder="Password" id="password" name="password" type="password" class="validate"  required)
+                label(for="password") Password
+                span(class="helper-text" data-error="Enter Password")
+
+              button(class="btn btn-primary" type="submit") Check In
+
+
+          #registration.col.s6.offset-s3
+            h1 Registration
+            form(action="/auth/registration" method="POST")
+              .input-field
+                input(placeholder="Email" name="email" id="remail" type="text" class="validate" required)
+                label(for="remail") Email
+                span(class="helper-text" data-error="Enter Email")
+              .input-field
+                input(placeholder="Password" id="rpassword" name="password" type="password" class="validate"  required)
+                label(for="rpassword") Password
+                span(class="helper-text" data-error="Enter Password")
+              .input-field
+                input(placeholder="Password" id="confirm" name="confirm" type="password" class="validate"  required)
+                label(for="confirm") Confirm Password
+                span(class="helper-text" data-error="Enter Password")
+
+              button(class="btn btn-primary" type="submit") Registration
+    include ../partials/footer

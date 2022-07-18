@@ -1,0 +1,35 @@
+include  partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include partials/navbar
+
+
+    h1 My orders
+    each order in orders
+      each course in order.courses
+        if  orders.length
+          each order in orders
+            .row
+              .col.s6.offset-s3
+                .card
+                 .card-content
+                  .card-title= order._id
+                  p.date Data #{order.date}
+                  p
+                    em= order.user.name
+                    |  (#{order.user.userId.email})
+                  ol
+                    each course in order.courses
+                      li #{course.course.title} x
+                        strong= course.count
+                  hr
+                  p Price: <strong class="price">#{order.price}<strong>
+        else
+           p No orders yet
+
+    include  partials/footer

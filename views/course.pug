@@ -1,0 +1,17 @@
+include  partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include partials/navbar
+    .container
+
+      .course
+      h1= course.title
+      img(src=course.img alt=course.title)
+      p.price.big= course.price
+
+    include partials/footer

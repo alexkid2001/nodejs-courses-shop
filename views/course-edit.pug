@@ -1,0 +1,38 @@
+include  partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include partials/navbar
+    .container
+
+      h1 Edit course: #{course.title}
+
+      form(action="/courses/edit" method="POST" class="c")
+        .input-field
+          input(placeholder="Course Name" name="title" id="title" type="text" class="validate" required value=course.title)
+          label.title Course Name
+          span(class="helper-text" data-error="Enter Name")
+
+        .input-field
+          input(placeholder="Price" id="price" name="price" type="number" class="validate"  required value=course.price)
+          label(for="price") Course Name
+          span(class="helper-text" data-error="Enter price")
+
+        .input-field
+          input(placeholder="Preview" id="preview" name="img" type="text" class="validate"  required value=course.img)
+          label(for="preview") URL image
+          span(class="helper-text" data-error="Choose File")
+
+        input(type="hidden" name="id" value=course.id)
+
+        button(type="submit" class="btn btn-primary") Edit Course
+
+      form(action="/courses/remove" method="POST")
+        input(type="hidden" name="id" value=course.id)
+        button(class="btn red") Remove course
+
+    include partials/footer

@@ -1,0 +1,48 @@
+nav
+    .nav-wrapper
+        a(href="#" class="brand-logo") Courses App
+        ul(id="nav-mobile" class="right hide-on-med-and-down")
+            if isHome
+                li.active
+                    a(href="/") Home
+            else
+                li
+                    a(href="/") Home
+
+            if isCourses
+                li.active
+                    a(href="/courses") Courses
+            else
+                li
+                    a(href="/courses") Courses
+
+            if isAuth
+                if isAdd
+                    li.active
+                        a(href="/add") Add Courses
+                else
+                    li
+                        a(href="/add") Add Courses
+
+                if isCart
+                    li.active
+                        a(href="/cart") Cart
+                else
+                    li
+                        a(href="/cart") Cart
+
+                if isOrder
+                    li.active
+                        a(href="/orders") Orders
+                else
+                    li
+                        a(href="/orders") Orders
+                li
+                    a(href="/auth/logout") logout
+            else
+                if isLogin
+                    li.active
+                        a(href="/auth/login#login") Login
+                else
+                    li
+                        a(href="/auth/login") login

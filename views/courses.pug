@@ -1,0 +1,32 @@
+include  partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include partials/navbar
+    .container
+      h1 Courses
+      if courses.length
+        each course in courses
+          .row
+            .col.s6.offset-s3
+              .card
+                .card-image
+                  img(src=course.img alt=course.title)
+                .card-content
+                  span.card-title= course.title
+                  p.price= course.price
+                .card-action.actions
+                  a(href=`/courses/${course.id}` target="_blank") Open course
+                  if isAuth
+                    a(href=`/courses/${course.id}/edit?allow=true`) Edit course
+                    form(action="/cart/add" method="POST")
+                      input(type="hidden" name="id" value=course.id)
+                      button(type="submit" class="btn btn-primary") Purcher
+      else
+        p There are no courses yet
+
+    include partials/footer
