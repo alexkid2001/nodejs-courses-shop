@@ -26,7 +26,7 @@ html
                                 td
                                     button(class="btn btn-small js-remove" data-idx="#{course.id}") Remove
 
-                p <strong>Price</strong> <span class="price">#{course.price}</span>
+                p <strong>Price</strong> <span class="price">#{price}</span>
                 form(action="/orders" methos="POST")
                     button(class="btn" type="submit") Order
             else

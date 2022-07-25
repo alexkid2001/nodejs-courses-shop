@@ -39,6 +39,10 @@ html
             h1 Registration
             form(action="/auth/registration" method="POST")
               .input-field
+                input(placeholder="Name" name="name" id="name" type="text" class="validate" required)
+                label(for="name") Name
+                span(class="helper-text" data-error="Enter Name")
+              .input-field
                 input(placeholder="Email" name="email" id="remail" type="text" class="validate" required)
                 label(for="remail") Email
                 span(class="helper-text" data-error="Enter Email")
