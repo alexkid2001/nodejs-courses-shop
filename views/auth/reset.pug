@@ -1,0 +1,29 @@
+include  ../partials/head
+
+html
+  head
+    title= title
+  body
+    h1= message
+
+    include ../partials/navbar
+
+
+    .container
+      .row
+        .col.s6.offset-s3
+          if error.length
+            p.alert= error
+          h1 Forgot password?
+          form(action="/auth/reset" method="POST")
+            .input-field
+              input(placeholder="Email" name="email" id="email" type="text" class="validate" required)
+              label(for="email") Email
+              span(class="helper-text" data-error="Enter Email")
+            input(type="hidden" name="_csrf" value=csrf)
+
+            button(class="btn btn-primary" type="submit") Resert
+
+
+
+    include ../partials/footer

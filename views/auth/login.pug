@@ -21,6 +21,8 @@ html
 
 
           #login.col.s6.offset-s3
+            if loginError.length
+                p.alert= loginError
             h1 Check In
             form(action="/auth/login" method="POST")
               .input-field
@@ -31,11 +33,16 @@ html
                 input(placeholder="Password" id="password" name="password" type="password" class="validate"  required)
                 label(for="password") Password
                 span(class="helper-text" data-error="Enter Password")
+              input(type="hidden" name="_csrf" value=csrf)
 
+              p
+                a(href='/auth/reset') Forget Password?
               button(class="btn btn-primary" type="submit") Check In
 
 
           #registration.col.s6.offset-s3
+            if registrationError.length
+              p.alert= registrationError
             h1 Registration
             form(action="/auth/registration" method="POST")
               .input-field
@@ -54,6 +61,7 @@ html
                 input(placeholder="Password" id="confirm" name="confirm" type="password" class="validate"  required)
                 label(for="confirm") Confirm Password
                 span(class="helper-text" data-error="Enter Password")
+              input(type="hidden" name="_csrf" value=csrf)
 
               button(class="btn btn-primary" type="submit") Registration
     include ../partials/footer

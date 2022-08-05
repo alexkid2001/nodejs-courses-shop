@@ -25,6 +25,7 @@ html
                     a(href=`/courses/${course.id}/edit?allow=true`) Edit course
                     form(action="/cart/add" method="POST")
                       input(type="hidden" name="id" value=course.id)
+                      input(type="hidden" name="_csrf" value=csrf)
                       button(type="submit" class="btn btn-primary") Purcher
       else
         p There are no courses yet

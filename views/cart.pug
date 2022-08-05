@@ -10,26 +10,27 @@ html
         .container
 
             h1 Cart
-            div#cart
-            if courses.length
-                table
-                    thead
-                        tr
-                            th Name
-                            th Count
-                            th Actions
-                    tbody
-                        each course in courses
+            #cart
+                if courses.length
+                    table
+                        thead
                             tr
-                                td= course.title
-                                td= course.count
-                                td
-                                    button(class="btn btn-small js-remove" data-idx="#{course.id}") Remove
+                                th Name
+                                th Count
+                                th Actions
+                        tbody
+                            each course in courses
+                                tr
+                                    td= course.title
+                                    td= course.count
+                                    td
+                                        button(class="btn btn-small js-remove" data-idx=course.id data-csrf=csrf) Remove
 
-                p <strong>Price</strong> <span class="price">#{price}</span>
-                form(action="/orders" methos="POST")
-                    button(class="btn" type="submit") Order
-            else
-                p Cart is empty
+                    p <strong>Price</strong> <span class="price">#{price}</span>
+                    form(action="/orders" methos="POST")
+                        input(type="hidden" name="_csrf" value=csrf)
+                        button(class="btn" type="submit") Order
+                else
+                    p Cart is empty
 
         include partials/footer

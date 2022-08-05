@@ -24,6 +24,7 @@ html
           input(placeholder="Preview" id="preview" name="preview" type="text" class="validate"  required)
           label(for="preview") URL image
           span(class="helper-text" data-error="Choose File")
+        input(type="hidden" name="_csrf" value=csrf)
 
         button(class="btn btn-primary") Add Course
 
