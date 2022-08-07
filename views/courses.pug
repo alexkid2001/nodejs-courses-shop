@@ -22,7 +22,8 @@ html
                 .card-action.actions
                   a(href=`/courses/${course.id}` target="_blank") Open course
                   if isAuth
-                    a(href=`/courses/${course.id}/edit?allow=true`) Edit course
+                    if (course.userId._id == userId)
+                      a(href=`/courses/${course.id}/edit?allow=true`) Edit course
                     form(action="/cart/add" method="POST")
                       input(type="hidden" name="id" value=course.id)
                       input(type="hidden" name="_csrf" value=csrf)

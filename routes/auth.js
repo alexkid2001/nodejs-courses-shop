@@ -1,12 +1,14 @@
 const { Router } = require('express')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
+const {validationResult} = require('express-validator/check')
 const nodemailer = require('nodemailer')
 const sendgrid = require('nodemailer-sendgrid-transport')
 const User = require('../models/user')
 const keys = require('../keys')
 const regEmail = require('../emails/registration')
 const resetEmail = require('../emails/reset')
+const {registerValidators} = require('../utils/validators')
 const router = Router()
 
 const transporter = nodemailer.createTransport(sendgrid({
@@ -61,24 +63,24 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/registration', async (req, res) => {
+router.post('/registration', registerValidators, async (req, res) => {
     try {
-        const {email, password, confirm, name } = req.body
+        const {email, password, name } = req.body
+        const errors = validationResult(req)
 
-        const candidate = await User.findOne({ email })
-        debugger
-        if (candidate) {
-            req.flash('registrationError', 'This user already exist')
-            res.redirect('/auth/login#registration')
-        } else {
-            const hashPassword = await bcrypt.hash(password, 10)
-            const user = new User({
-                email, name, password: hashPassword, cart: {items: []}
-            })
-            await user.save()
-            await transporter.sendMail({ ...regEmail(email)  })
-            res.redirect('/auth/login#login')
+        if(!errors.isEmpty()) {
+            req.flash('registrationError', errors.array()[0].msg)
+            return res.status(422).redirect('/auth/login#registration')
         }
+
+        const hashPassword = await bcrypt.hash(password, 10)
+        const user = new User({
+            email, name, password: hashPassword, cart: {items: []}
+        })
+        await user.save()
+        await transporter.sendMail({ ...regEmail(email)  })
+        res.redirect('/auth/login#login')
+
     } catch (err) {
         console.error(err)
     }
@@ -99,7 +101,6 @@ router.get('/password/:token', async (req, res) => {
             resetToken: req.params.token,
             resetTokenExp: {$gt: Date.now()}
         })
-
         if (!user) return res.redirect('/auth/login')
 
         res.render('auth/password', ({
@@ -126,7 +127,7 @@ router.post('/reset', (req, res) => {
 
             if (candidate) {
                 candidate.resetToken = token
-                candidate.resetTokenExp = Date.now() + 3600
+                candidate.resetTokenExp = (Date.now() + 60 * 60 * 1000)
                 await candidate.save()
                 await transporter.sendMail(resetEmail(candidate.email, token))
                 res.redirect('/auth/login')
@@ -141,6 +142,7 @@ router.post('/reset', (req, res) => {
 })
 
 router.post('/password', async (req, res) => {
+    console.log('Exp Time:', new Date(Date.now()))
     try {
         const user = await User.findOne({
             _id: req.body.userId,
@@ -155,7 +157,7 @@ router.post('/password', async (req, res) => {
             await user.save()
             res.redirect('/auth/login')
         } else {
-            res.flash('loginError', 'token life time is finished')
+            req.flash('loginError', 'token life time is finished')
             res.redirect('/auth/login')
         }
     } catch (err) {

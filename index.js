@@ -24,6 +24,7 @@ const app = express()
 // const hbs = exphds.create({
 //     defaultLayout: 'main',
 //     extname: 'hbs'
+//     helpers: require('./utils/hbs-helpers')
 // })
 
 const store = new MongoDBStore({

@@ -44,13 +44,13 @@ html
             if registrationError.length
               p.alert= registrationError
             h1 Registration
-            form(action="/auth/registration" method="POST")
+            form(action="/auth/registration" method="POST" novalidate)
               .input-field
                 input(placeholder="Name" name="name" id="name" type="text" class="validate" required)
                 label(for="name") Name
                 span(class="helper-text" data-error="Enter Name")
               .input-field
-                input(placeholder="Email" name="email" id="remail" type="text" class="validate" required)
+                input(placeholder="Email" name="email" id="remail" type="email" class="validate" required)
                 label(for="remail") Email
                 span(class="helper-text" data-error="Enter Email")
               .input-field
